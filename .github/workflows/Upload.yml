@@ -42,6 +42,7 @@ jobs:
         git clone https://github.com/openwrt/openwrt $GITHUB_WORKSPACE/Official
         git clone https://github.com/x-wrt/x-wrt $GITHUB_WORKSPACE/Xwrt
         git clone https://github.com/padavanonly/immortalwrt-mt798x-24.10 $GITHUB_WORKSPACE/Mt798x
+        git clone https://github.com/hanwckf/immortalwrt-mt798x-21.02 $GITHUB_WORKSPACE/Mt798x
         echo "" >$GITHUB_WORKSPACE/123
         
         cd $GITHUB_WORKSPACE/Lede
