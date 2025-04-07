@@ -19,7 +19,7 @@ echo -e "\e[36m\e[0m ${Color}${2}\e[0m"
 
 function settings_variable() {
 cd ${GITHUB_WORKSPACE}
-bash <(curl -fsSL https://raw.githubusercontent.com/281677160/common/main/custom/first.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/tom4733/common/main/custom/first.sh)
 }
 
 function Diy_variable() {
@@ -270,7 +270,7 @@ fi
 
 
 function Diy_update() {
-bash <(curl -fsSL https://raw.githubusercontent.com/281677160/common/main/custom/ubuntu.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/tom4733/common/main/custom/ubuntu.sh)
 if [[ $? -ne 0 ]];then
   TIME r "依赖安装失败，请检测网络后再次尝试!"
   exit 1
@@ -329,14 +329,14 @@ else
   THEME_BRANCH="Theme1"
 fi
 
-echo "src-git danshui https://github.com/281677160/openwrt-package.git;$SOURCE" >> ${HOME_PATH}/feeds.conf.default
-echo "src-git dstheme https://github.com/281677160/openwrt-package.git;$THEME_BRANCH" >> ${HOME_PATH}/feeds.conf.default
+echo "src-git danshui https://github.com/tom4733/openwrt-package.git;$SOURCE" >> ${HOME_PATH}/feeds.conf.default
+echo "src-git dstheme https://github.com/tom4733/openwrt-package.git;$THEME_BRANCH" >> ${HOME_PATH}/feeds.conf.default
 echo "src-git OpenClash https://github.com/vernesong/OpenClash.git;$CLASH_BRANCH" >> ${HOME_PATH}/feeds.conf.default
 
 # 增加中文语言包
 A_PATH="$HOME_PATH/package"
 if [[ -z "$(find "$A_PATH" -type d -name "default-settings" -print)" ]] && [[ -d "$C_PATH" ]]; then
-  gitsvn https://github.com/281677160/common/tree/main/Share/default-settings ${HOME_PATH}/package/default-settings
+  gitsvn https://github.com/tom4733/common/tree/main/Share/default-settings ${HOME_PATH}/package/default-settings
   if grep -q "libustream-wolfssl" "${HOME_PATH}/include/target.mk"; then
     sed -i 's?libustream-wolfssl?libustream-openssl?g' "${HOME_PATH}/include/target.mk"
   fi
@@ -350,7 +350,7 @@ if [[ -z "$(find "$A_PATH" -type d -name "default-settings" -print)" ]] && [[ -d
     sed -i 's?DEFAULT_PACKAGES:=?DEFAULT_PACKAGES:=default-settings luci luci-compat luci-lib-base luci-lib-ipkg ?g' "${HOME_PATH}/include/target.mk"
   fi
 elif [[ -z "$(find "$A_PATH" -type d -name "default-settings" -print)" ]] && [[ ! -d "$C_PATH" ]]; then
-  gitsvn https://github.com/281677160/common/tree/main/Share/default-setting ${HOME_PATH}/package/default-settings
+  gitsvn https://github.com/tom4733/common/tree/main/Share/default-setting ${HOME_PATH}/package/default-settings
   if grep -q "libustream-wolfssl" "${HOME_PATH}/include/target.mk"; then
     sed -i 's?libustream-wolfssl?libustream-openssl?g' "${HOME_PATH}/include/target.mk"
   fi
@@ -946,7 +946,7 @@ CONFIG_PACKAGE_kmod-fs-vfat=y
 CONFIG_PACKAGE_kmod-fuse=y
 # CONFIG_PACKAGE_kmod-fs-ntfs is not set
 ' >> ${HOME_PATH}/.config
-gitsvn https://github.com/281677160/common/blob/main/Share/block/10-mount ${HOME_PATH}/files/etc/hotplug.d/block/10-mount
+gitsvn https://github.com/tom4733/common/blob/main/Share/block/10-mount ${HOME_PATH}/files/etc/hotplug.d/block/10-mount
 fi
 
 if [[ "${Disable_autosamba}" == "1" ]]; then
@@ -1108,7 +1108,7 @@ fi
 if [[ `grep -c "CONFIG_PACKAGE_luci-theme-argon=y" ${HOME_PATH}/.config` -eq '1' ]]; then
   pmg="$(echo "$(date +%M)" | sed 's/^.//g')"
   mkdir -p ${HOME_PATH}/files/www/luci-static/argon/background
-  curl -fsSL https://raw.githubusercontent.com/281677160/common/main/Share/argon/jpg/${pmg}.jpg -o ${HOME_PATH}/files/www/luci-static/argon/background/argon.jpg
+  curl -fsSL https://raw.githubusercontent.com/tom4733/common/main/Share/argon/jpg/${pmg}.jpg -o ${HOME_PATH}/files/www/luci-static/argon/background/argon.jpg
   if [[ $? -ne 0 ]]; then
     echo "拉取文件错误,请检测网络"
     exit 1
@@ -1523,7 +1523,7 @@ export kernel_repo="ophub/kernel"
 [[ -z "${kernel_usage}" ]] && export kernel_usage="stable"
 [[ -z "${UPLOAD_WETRANSFER}" ]] && export UPLOAD_WETRANSFER="true"
 if [[ -z "${amlogic_kernel}" ]]; then
-  curl -fsSL https://github.com/281677160/common/releases/download/API/${kernel_usage}.api -o ${HOME_PATH}/${kernel_usage}.api
+  curl -fsSL https://github.com/tom4733/common/releases/download/API/${kernel_usage}.api -o ${HOME_PATH}/${kernel_usage}.api
   export amlogic_kernel="$(grep -Eo '"name": "[0-9]+\.[0-9]+\.[0-9]+\.tar.gz"' ${HOME_PATH}/${kernel_usage}.api |grep -Eo "[0-9]+\.[0-9]+\.[0-9]+" |awk 'END {print}' |sed s/[[:space:]]//g)"
   [[ -z "${amlogic_kernel}" ]] && export amlogic_kernel="5.10.170"
 fi
